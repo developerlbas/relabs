@@ -18,9 +18,9 @@ class Marital(models.Model):
 #------------------------------------------
 class Nacionalidad(models.Model):
 	abbr_estado		= models.CharField(max_length=5, primary_key=True, null=False)
-	descr			= models.CharField(max_length=100)	
+	descr			= models.CharField(max_length=100, null=False)	
 	nacimiento		= models.CharField(max_length=50)
-	clave_estado	= models.IntegerField()
+	clave_estado	= models.IntegerField(null=False)
 
 	class Meta:
 		db_table='nacionalidad'
@@ -57,4 +57,13 @@ class Autoridad(models.Model):
 
 	class Meta:
 		db_table='autoridad'
+#------------------------------------------
+class Plantilla(models.Model):
+	id				= models.AutoField(primary_key=True)
+	rfc				= models.ForeignKey(Personal)
+	tipo_trabajador	= models.ForeignKey(Programa)
+	
+	
+	class Meta:
+		db_table='plantilla'
 #------------------------------------------

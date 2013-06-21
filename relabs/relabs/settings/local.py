@@ -25,11 +25,11 @@ TEMPLATE_DEBUG = DEBUG
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.msyql',
-        'NAME':'',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dev_relabs_db',
+        'USER': 'dev_relabs_user',
+        'PASSWORD': 'dev_relabs_pwd',
+        'HOST': '10.20.54.12',
         'PORT': '',
     }
 }
@@ -49,7 +49,8 @@ CACHES = {
 ########## TOOLBAR CONFIGURATION
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
-    'debug_toolbar',
+    #'debug_toolbar',
+    'repemps',
 )
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation

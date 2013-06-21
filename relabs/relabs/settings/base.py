@@ -45,11 +45,11 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dev_relabs_db',
+        'USER': 'dev_relabs_user',
+        'PASSWORD': 'dev_relabs_pwd',
+        'HOST': '10.20.54.12',
         'PORT': '',
     }
 }
@@ -190,6 +190,7 @@ DJANGO_APPS = (
     # Admin panel and documentation:
     'django.contrib.admin',
     # 'django.contrib.admindocs',
+    
 )
 
 THIRD_PARTY_APPS = (
@@ -199,6 +200,7 @@ THIRD_PARTY_APPS = (
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+	#'repemps',	# active
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

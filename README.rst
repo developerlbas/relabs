@@ -1,8 +1,7 @@
 ========================
 relabs
 ========================
-
-A project excersice for django 1.5.1
+django 1.5.1
 
 To use this project follow these steps:
 
@@ -66,3 +65,15 @@ Acknowledgements
 ================
 
   To Do
+
+ References
+ ==========
+
+ South::
+ 	http://south.readthedocs.org/en/latest/tutorial/index.html
+
+ 	$ ./manage.py schemamigration per_apps --initial
+ 	or
+ 	$ ./manage.py schemamigration per_apps --auto
+
+ 	grant all privileges on dev_relabs_db.* to 'dev_relabs_user'@xxx identified by 'you_password';
