@@ -1,8 +1,8 @@
 ========================
-django-project-devel
+relabs
 ========================
 
-A project template for Django 1.5.1
+A project excersice for django 1.5.1
 
 To use this project follow these steps:
 
