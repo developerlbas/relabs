@@ -58,11 +58,52 @@ class Autoridad(models.Model):
 	class Meta:
 		db_table='autoridad'
 #------------------------------------------
-class Plantilla(models.Model):
-	id				= models.AutoField(primary_key=True)
-	rfc				= models.ForeignKey(Personal)
-	tipo_trabajador	= models.ForeignKey(Programa)
+class Codigos(models.Model):
+	codigo 		= models.CharField(max_length=10, null=False)
+	descr		= models.CharField(max_length=150, null=False)
+	rama		= models.CharField(max_length=50)
+	anio		= models.IntegerField()
 	
+	class Meta:
+		db_table='codigos'
+		unique_together=(('codigo', 'anio'),)
+#------------------------------------------
+class Adscripcion(models.Model):
+	cr			= models.IntegerField(primary_key=True)
+	descr		= models.CharField(max_length=200)
+	fisicamente	= models.IntegerField()
+	fdescr		= models.CharField(max_length=200)
+	jnum		= models.IntegerField()
+	
+	class Meta:
+		db_table = 'adscripcion'
+	
+#------------------------------------------
+class Tipot(models.Model):
+	tipo	= models.CharField(max_length=25, primary_key=False)
+	descr	= models.CharField(max_length=25, primary_key=False)
+	
+	class Meta:
+		db_table='tipot'
+#------------------------------------------
+class Plantilla(models.Model):
+	rfc				= models.ForeignKey(Personal, primary_key=True)
+	vigencia_del	= models.DateField(auto_now_add=False, null=True)
+	vigencial_al	= models.DateField(auto_now_add=False, null=True)
+	cr				= models.ForeignKey(Adscripcion)
+	autoridad		= models.ForeignKey(Autoridad)
+	activo			= models.SmallIntegerField()
+	tabulador		= models.SmallIntegerField()
+	jornada			= models.SmallIntegerField()
+	tipo_trabajador = models.ForeignKey(Programa)
+	clave_presupuestal = models.CharField(max_length=30)
+	movto			= models.IntegerField(default=0)
+	docto			= models.IntegerField(default=0)
+	fakerfc			= models.CharField(max_length=13)
+	codigo			= models.ForeignKey(Codigos)
+	anio			= models.IntegerField()
+	quincena 		= models.IntegerField()
+	tipot			= models.ForeignKey(Tipot)
 	
 	class Meta:
 		db_table='plantilla'
