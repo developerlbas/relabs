@@ -59,14 +59,14 @@ class Autoridad(models.Model):
 		db_table='autoridad'
 #------------------------------------------
 class Codigos(models.Model):
-	codigo 		= models.CharField(max_length=10, null=False)
+	codigo 		= models.CharField(max_length=10, primary_key=True)
 	descr		= models.CharField(max_length=150, null=False)
 	rama		= models.CharField(max_length=50)
 	anio		= models.IntegerField()
 	
 	class Meta:
 		db_table='codigos'
-		unique_together=(('codigo', 'anio'),)
+		#unique_together=(('codigo', 'anio'),)
 #------------------------------------------
 class Adscripcion(models.Model):
 	cr			= models.IntegerField(primary_key=True)
@@ -80,8 +80,8 @@ class Adscripcion(models.Model):
 	
 #------------------------------------------
 class Tipot(models.Model):
-	tipo	= models.CharField(max_length=25, primary_key=False)
-	descr	= models.CharField(max_length=25, primary_key=False)
+	tipo	= models.CharField(max_length=25, primary_key=True)
+	descr	= models.CharField(max_length=25, null=False)
 	
 	class Meta:
 		db_table='tipot'
