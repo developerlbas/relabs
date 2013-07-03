@@ -4,13 +4,10 @@ from .models import Plantilla
 
 class HomeView(DetailView):
 	template_name='repemps_list.html'
+	context_object_name='repemp_data'
 	
-	def get_queryset(self):
-		"""
-		Return the reference object.
-		"""
-		rfc = self.kwargs.get('rfc')
-		print "Lookup for rfc=%s" % (rfc)
-		print "-------------------"
-		return get_object_or_404(Plantilla, pk=rfc)
+	def get_object(self):
+		return Plantilla.objects.select_related().get(rfc='GAAJ780402K51')
 		
+	def get_queryset(self):
+		return Plantilla.objects.all()

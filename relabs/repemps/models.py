@@ -105,6 +105,10 @@ class Plantilla(models.Model):
 	quincena 		= models.IntegerField()
 	tipot			= models.ForeignKey(Tipot)
 	
+	def __unicode__(self):
+		return self.rfc
+		
 	class Meta:
 		db_table='plantilla'
+		
 #------------------------------------------
