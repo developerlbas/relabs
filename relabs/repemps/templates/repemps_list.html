@@ -3,10 +3,13 @@
 
       <h1>{% block page_title %}repemp:{% endblock page_title %}</h1>
 
-      {% block content %}
-        
-		{{ repemp_data }}
-		
-      {% endblock content %}
+	{% block content %}
+		{% if repemp_data %}
+			{{ repemp_data}}
+			
+		{% else %}
+			<div>No data</div>
+		{% endif %}	
+	{% endblock content %}
 
     </div> 

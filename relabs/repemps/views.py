@@ -7,7 +7,6 @@ class HomeView(DetailView):
 	context_object_name='repemp_data'
 	
 	def get_object(self):
-		return Plantilla.objects.select_related().get(rfc='GAAJ780402K51')
-		
-	def get_queryset(self):
-		return Plantilla.objects.all()
+		rfcpk = self.kwargs.get('rfc')
+		print "Lookup object: %s " % rfcpk
+		return get_object_or_404(Plantilla, rfc = rfcpk)

@@ -28,7 +28,7 @@ class Nacionalidad(models.Model):
 class Personal(models.Model):
 	rfc			= models.CharField(max_length=13, primary_key=True, null=False)
 	apellidop 	= models.CharField(max_length=50, null=False)
-	apellidom	= models.CharField(max_length=50, blank=True)
+	apellidom	= models.CharField(max_length=50, blank=True,default='')
 	nombre		= models.CharField(max_length=100, null=False)
 	curp		= models.CharField(max_length=18, null=False, unique=True)
 	sexo		= models.ForeignKey(Genero)
@@ -40,6 +40,10 @@ class Personal(models.Model):
 	colonia		= models.CharField(max_length=200, blank=True, null=True)
 	municipio	= models.CharField(max_length=200, blank=True, null=True)
 	cedula		= models.BigIntegerField(default=0)
+
+	def __unicode__(self):
+		fname = "obj: %s %s %s " % (self.apellidop, self.apellidom, self.nombre)
+		return fname
 
 	class Meta:
 		db_table='personal'

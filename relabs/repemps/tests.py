@@ -12,7 +12,7 @@ from repemps.models import Plantilla
 class PlantillaTestCase(TestCase):
 	# datos preliminares
 	def test_listado_general(self):
-		p=Plantilla.object.select_related().get(rfc='GAAJ780402K51')
+		p=Plantilla.object.select_related().get(rfc='AAAA112266JKL')
 		
-		assertEqual( len(p) ,1)
+		assertEqual( len(p) ,0)
 		
