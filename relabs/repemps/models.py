@@ -26,9 +26,9 @@ class Nacionalidad(models.Model):
 		db_table='nacionalidad'
 #------------------------------------------
 class Personal(models.Model):
-	rfc			= models.CharField(max_length=13, primary_key=True, null=False)
+	rfc			= models.CharField(max_length=13, primary_key=True)
 	apellidop 	= models.CharField(max_length=50, null=False)
-	apellidom	= models.CharField(max_length=50, blank=True,default='')
+	apellidom	= models.CharField(max_length=50, default='')
 	nombre		= models.CharField(max_length=100, null=False)
 	curp		= models.CharField(max_length=18, null=False, unique=True)
 	sexo		= models.ForeignKey(Genero)
@@ -36,14 +36,13 @@ class Personal(models.Model):
 	abbr_estado	= models.ForeignKey(Nacionalidad)
 	ingreso_gob	= models.DateField(auto_now_add=False, null=False)
 	ingreso_dep	= models.DateField(auto_now_add=False, null=False)
-	domicilio	= models.CharField(max_length=200, blank=True, null=True)
-	colonia		= models.CharField(max_length=200, blank=True, null=True)
-	municipio	= models.CharField(max_length=200, blank=True, null=True)
+	domicilio	= models.CharField(max_length=200, default='CONOCIDO')
+	colonia		= models.CharField(max_length=200, default='')
+	municipio	= models.CharField(max_length=200, default='')
 	cedula		= models.BigIntegerField(default=0)
 
 	def __unicode__(self):
-		fname = "obj: %s %s %s " % (self.apellidop, self.apellidom, self.nombre)
-		return fname
+		return unicode(self.rfc)
 
 	class Meta:
 		db_table='personal'
@@ -110,7 +109,7 @@ class Plantilla(models.Model):
 	tipot			= models.ForeignKey(Tipot)
 	
 	def __unicode__(self):
-		return self.rfc
+		return self.clave_presupuestal
 		
 	class Meta:
 		db_table='plantilla'

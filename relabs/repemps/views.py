@@ -9,4 +9,8 @@ class HomeView(DetailView):
 	def get_object(self):
 		rfcpk = self.kwargs.get('rfc')
 		print "Lookup object: %s " % rfcpk
-		return get_object_or_404(Plantilla, rfc = rfcpk)
+		try:
+			d = Plantilla.objects.select_related().get(rfc=rfcpk)
+			return d
+		except Plantilla.DoesNotExist:
+			return None
