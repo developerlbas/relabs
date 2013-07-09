@@ -108,10 +108,12 @@ class Plantilla(models.Model):
 	quincena 		= models.IntegerField()
 	tipot			= models.ForeignKey(Tipot)
 	
+	#objects			= models.Manager()
+	#datos			= MaleManager()
+	
 	def __unicode__(self):
 		return self.clave_presupuestal
 		
 	class Meta:
 		db_table='plantilla'
-		
-#------------------------------------------
+#-----------------------------------------
