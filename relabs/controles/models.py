@@ -11,15 +11,16 @@
 """
 #core django
 from django.db import models
+from django.contrib.auth.models import User
 # local apps
 from repemps.models import Plantilla
 
 
 class Turno(models.Model):
 	"""
-		Cada trabajador tiene un turno laboral. Este puede ser matutino, ves-
-		pertino, nocturno o especial.
-		Por default, el turno sera matutino
+	Cada trabajador tiene un turno laboral. Este puede ser matutino, ves-
+	pertino, nocturno o especial.
+	Por default, el turno sera matutino
 	"""
 	turno		= models.SmallIntegerField(primary_key=True)
 	descr		= models.CharField(max_length=50, null=False)
@@ -29,12 +30,12 @@ class Turno(models.Model):
 
 class Atributo(models.Model):
 	"""
-		Atributo del trabajador. Estos pueden ser aquellos  atributos que por su
-		naturaleza no se encuentran contemplados en datos Personales. Tales  ---
-		atributos son, llegar a limitarlos, parentesco (PADRE o MADRE), delega-.
-		cion a la que pertenecen, etc.
+	Atributo del trabajador. Estos pueden ser aquellos  atributos que por su
+	naturaleza no se encuentran contemplados en datos Personales. Tales  ---
+	atributos son, no limitados a : parentesco (PADRE o MADRE), delegacion a
+	la que pertenecen, etc.
 	"""
-	atributo	= models.SmallIntegerField()
+	atributo	= models.SmallIntegerField(primary_key=True)
 	descr		= models.CharField(max_length=50)
 
 	class Meta:
@@ -46,7 +47,7 @@ class Control(models.Model):
 	clave_trabajador <-> rfc. Opcionalmente se agrega el atributo y turno del -
 	trabajador.
 	"""
-	clave_trabajador	= models.BigIntergerField(primary_key=True)
+	clave_trabajador	= models.BigIntegerField(primary_key=True)
 	rfc					= models.ForeignKey(Plantilla)
 	atributo			= models.ForeignKey(Atributo)
 	turno				= models.ForeignKey(Turno)
@@ -55,7 +56,7 @@ class Control(models.Model):
 		db_table='control'
 
 
-class Semana(models.Models):
+class Semana(models.Model):
 	"""
 	Describe los dias de la semana laboral. Se identifican como lo establece el
 	calendario ingles. 0 es domingo, 1 es lunes...asi sucesivamente.
@@ -99,7 +100,7 @@ class Horario(models.Model):
 		unique_together = ('clave_trabajador', 'dia_de_semana')
 
 
-class Operacion(modesl.Model):
+class Operacion(models.Model):
 	"""
 	Operacion es un catalogo de incidentes que puede tener un trabajador. Por -
 	ejemplo, el catalogo de pagos _movimientos_ establece como 7230 una falta -
@@ -125,15 +126,15 @@ class Operacion(modesl.Model):
 
 class Excepcion(models.Model):
 	"""
-	En algunas ocasiones, sobre todo los días festivos, permisos por parte sin-
-	dical, permisos por dia del padre, de tu madre (:P),deberán ser exceptuados.
+	En algunas ocasiones, sobre todo los dias festivos, permisos por parte sin-
+	dical, permisos por dia del padre, de tu madre (:P),deberan ser exceptuados.
 	"""
 	fecha_excepcion		= models.DateField()
 	descr				= models.CharField(max_length=100)
 	hora_excepcion		= models.TimeField()
 	operacion			= models.ForeignKey(Operacion)
 	habilitado			= models.BooleanField()
-
+	
 	class Meta:
 		db_table = 'excepcion' # tambien podria ser nombrado fetivos
 
@@ -154,9 +155,7 @@ class Checada(models.Model):
 	habilitado			= models.BooleanField()
 	operacion			= models.ForeignKey(Operacion)
 	usuario				= models.ForeignKey(User)
-	id					= models.AutoField()
+	id					= models.AutoField(primary_key=True)
 
 	class Meta:
 		db_table='checada'
-	
-	

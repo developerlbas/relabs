@@ -51,6 +51,7 @@ CACHES = {
 INSTALLED_APPS += (
     'debug_toolbar',
     'repemps',
+	'controles',
 )
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
