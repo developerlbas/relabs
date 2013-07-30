@@ -35,16 +35,11 @@ class Paso(models.Model):
 	actualizacion		= a[1]
 	"""
 	clave_trabajador 	= models.BigIntegerField()
-	fecha_control		= models.DateField()
+	fecha_control		= models.DateTimeField(auto_now_add=False)
 	hora_control		= models.TimeField()
-	actualizacion		= models.DateField()
+	actualizacion		= models.DateTimeField(auto_now_add=False)
 	id					= models.AutoField(primary_key=True)
 
 	class Meta:
 		db_table='paso'
-	
-	#def save(self, *args, **kwargs):
-
-class Chk(models.Model):
-	archivo		= models.FileField()
-	created_at	= models.DateTimeField(auto_now_add=True, editable=False)
+		unique_together= ('clave_trabajador','fecha_control')

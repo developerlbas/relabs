@@ -1,11 +1,9 @@
-# core libs
-from django import forms
-#third-party libs
-# app libs
-from .models import Paso
+#std
+#core
+from django.forms import forms
+#3rd
+#apps
 
-class PasoUploadModelForm(forms.ModelForm):
+class CHKFileForm(forms.Form):
+	archivo 	= forms.FileField()
 	
-	class Meta:
-		model = Chk
-		

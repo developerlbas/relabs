@@ -29,7 +29,8 @@ DATABASES = {
         'NAME': 'dev_relabs_db',
         'USER': 'dev_relabs_user',
         'PASSWORD': 'dev_relabs_pwd',
-        'HOST': '10.20.54.12',
+        #'HOST': '10.20.54.12',
+        'HOST': '127.0.0.1',
         'PORT': '',
     }
 }
@@ -52,6 +53,7 @@ INSTALLED_APPS += (
     'debug_toolbar',
     'repemps',
 	'controles',
+	'helper',
 )
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
