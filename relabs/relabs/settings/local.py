@@ -29,8 +29,8 @@ DATABASES = {
         'NAME': 'dev_relabs_db',
         'USER': 'dev_relabs_user',
         'PASSWORD': 'dev_relabs_pwd',
-        #'HOST': '10.20.54.12',
-        'HOST': '127.0.0.1',
+        'HOST': '10.20.54.12',
+        #'HOST': '127.0.0.1',
         'PORT': '',
     }
 }

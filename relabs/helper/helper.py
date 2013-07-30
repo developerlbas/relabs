@@ -70,6 +70,7 @@ class CSVParser(object):
 				self._source = source
 			if isinstance(source, basestring):
 				self._source = open(source, 'rb')
+			self._source = source
 		except Exception, err:
 			raise UnknownSource(err)
 			
@@ -81,7 +82,10 @@ class CSVParser(object):
 		"""
 		Este...
 		"""
-		self._reader = csv.reader(self._source, delimiter = self.delimiter)
+		try:
+			self._reader = csv.reader(self._source, delimiter = self.delimiter)
+		except csv.Error as e:
+			print "File: %s, linea: %d : %s" %(self._source, self._reader.line_num, e)
 
 	def get_value(self, item):
 		"""
