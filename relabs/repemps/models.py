@@ -1,6 +1,5 @@
 from django.db import models
 
-from django.db import models
 #------------------------------------------
 class Genero(models.Model):
 	sexo	= models.CharField(max_length=10, primary_key=True, null=False)
@@ -81,7 +80,7 @@ class Adscripcion(models.Model):
 	class Meta:
 		db_table = 'adscripcion'
 	
-#------------------------------------------
+#------------------------------------------ tipo trabajador (evt, base, reg, etc)
 class Tipot(models.Model):
 	tipo	= models.CharField(max_length=25, primary_key=True)
 	descr	= models.CharField(max_length=25, null=False)

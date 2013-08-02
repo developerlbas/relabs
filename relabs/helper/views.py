@@ -10,7 +10,7 @@ from .forms import CHKFileForm
 class CHKFileView(FormView):
 	template_name = 'chk/cargar.html'
 	form_class = CHKFileForm
-	success_url = '/controles/procesar/'
+	success_url = '/ctl/procesar/'
 	
 	def form_valid(self, form):
 		return super(CHKFileView,self).form_valid(form)
