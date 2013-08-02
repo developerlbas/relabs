@@ -60,6 +60,8 @@ class Semana(models.Model):
 	"""
 	Describe los dias de la semana laboral. Se identifican como lo establece el
 	calendario ingles. 0 es domingo, 1 es lunes...asi sucesivamente.
+	Pseudocodigo:
+	f = (date.weekday() + 1 ) % 7 , where 0=Dom, 1=Lun, etc.
 	"""
 	dia			= models.SmallIntegerField(primary_key=True)
 	descr		= models.CharField(max_length=50)
