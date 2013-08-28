@@ -48,7 +48,8 @@ class Control(models.Model):
 	trabajador.
 	"""
 	clave_trabajador	= models.BigIntegerField(primary_key=True)
-	rfc					= models.ForeignKey(Plantilla)
+	#rfc					= models.ForeignKey(Plantilla)
+	rfc					= models.CharField(max_length=13)
 	atributo			= models.ForeignKey(Atributo)
 	turno				= models.ForeignKey(Turno)
 
@@ -95,11 +96,11 @@ class Horario(models.Model):
 	hora				= models.TimeField()
 	habilitado			= models.SmallIntegerField()
 	tipo_checada		= models.ForeignKey(TipoChecada)
-	#id					= models.AutoField()
+	id					= models.AutoField(primary_key=True)
 
 	class Meta:
 		db_table = 'horario'
-		unique_together = ('clave_trabajador', 'dia_de_semana')
+		#unique_together = ('clave_trabajador', 'hora')
 
 
 class Operacion(models.Model):
@@ -138,7 +139,7 @@ class Excepcion(models.Model):
 	habilitado			= models.BooleanField()
 	
 	class Meta:
-		db_table = 'excepcion' # tambien podria ser nombrado fetivos
+		db_table = 'excepcion' # tambien podria ser nombrado festivos
 
 
 class Checada(models.Model):

@@ -54,6 +54,7 @@ INSTALLED_APPS += (
     'repemps',
 	'controles',
 	'helper',
+	'discover_runner',
 )
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation

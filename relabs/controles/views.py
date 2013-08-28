@@ -6,3 +6,6 @@ from django.views.generic import View
 
 class Procesar(View):
 	pass
+
+class Listado(View):
+	pass
