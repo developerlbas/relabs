@@ -43,3 +43,21 @@ class Paso(models.Model):
 	class Meta:
 		db_table='paso'
 		unique_together= ('clave_trabajador','fecha_control')
+
+class Puro(models.Model):
+	"""
+	Pseudo:
+	clave_trabajador 	= c[2]
+	fecha_control		= b[2]
+	hora_control		= c[0]
+	actualizacion		= a[1]
+	"""
+	clave_trabajador 	= models.BigIntegerField()
+	fecha_control		= models.IntegerField()
+	hora_control		= models.IntegerField()
+	actualizacion		= models.DateTimeField(auto_now_add=False)
+	id					= models.AutoField(primary_key=True)
+
+	class Meta:
+		db_table='puro'
+		#unique_together= ('clave_trabajador','fecha_control')

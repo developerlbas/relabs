@@ -6,7 +6,7 @@ from django.utils.timezone import utc
 from django.db.utils import IntegrityError
 #third-party libs
 #app lib
-from .models import Paso
+from .models import Puro
 from .excepcion import UnknownSource
 
 """
@@ -106,29 +106,33 @@ class CSVParser(object):
 		Al mismo tiempo verifica el tipo de informacion, almacena los
 		valores en un dict para posteriormente vaciarlos en la tabla
 		"""
-
+	
 		#truncate models
-		Paso.objects.all().delete()
-		p = []
-		paso = 0
+		Puro.objects.all().delete()
+
+		peso = 0
+
+		print "Peso: %d " % (peso)
 		for row in self._reader:
 			if not row: continue # las lineas en blanco o invalidas se ignoran
 			#la fecha de extraction. Verificar patron (1)
 			if len(row) == 2:
 				if 1 == self.get_value(row[0]):
 					self.extraction_timestamp = datetime.strptime(row[1], '%Y%m%d').replace(tzinfo=utc)
+					continue
 				
-			#la fecha de checada. Verificar patron (4)	
+			#la fecha de checada. Verificar patron (4)	p.e. 20130022
 			elif len(row) == 4:
 				if 4 == self.get_value(row[1]):
-					fecha_de_checada = datetime.strptime(row[2], "%Y%m%d")
+					fecha_de_checada = self.get_value(row[2])
+					continue
 				
 			#los datos del trabajador y hora de checada. Verificar patron (3)
 			elif len(row) == 9:
 				if 3 == self.get_value(row[1]):
-					hora_de_checada = datetime.strptime(row[0], "%H%M%S")
-					hora_de_checada = hora_de_checada.time()
-					hora_y_fecha_de_checada = datetime.combine(fecha_de_checada, hora_de_checada).replace(tzinfo=utc)
+
+					
+					hora_de_checada = self.get_value(row[0])
 					clave_de_trabajador = self.get_value(row[2])
 					# insertar en tabla
 					#clave_trabajador 
@@ -137,16 +141,15 @@ class CSVParser(object):
 					#actualizacion
 					#id
 					#try:
-					q = {'clave_trabajador':clave_de_trabajador,
-						'fecha_control':hora_y_fecha_de_checada,
-						'hora_control':hora_de_checada,
-						'actualizacion':self.extraction_timestamp
-						}
-					p.add(q)
-					paso = paso +1
-					#p.save()
-					print "%4d" % (paso),
+					print "%d" % (peso),
+					peso = peso + 1
+					p = Puro(clave_trabajador=clave_de_trabajador,
+						fecha_control=fecha_de_checada,
+						hora_control=hora_de_checada,
+						actualizacion=self.extraction_timestamp
+						)
+					#	p.save()
 					#except IntegrityError:
 					#	pass
-		s = Paso(p)
+		p.save()
 		return True
