@@ -61,3 +61,5 @@ class Puro(models.Model):
 	class Meta:
 		db_table='puro'
 		#unique_together= ('clave_trabajador','fecha_control')
+
+

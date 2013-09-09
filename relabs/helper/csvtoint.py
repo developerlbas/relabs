@@ -60,6 +60,8 @@ class CSVParser(object):
 		#
 		self.extraction_timestamp= date.today()
 		self.processed_timestamp = datetime.today()
+		#
+		self.db_data=None
 
 	def __load(self, source):
 		"""
@@ -111,11 +113,11 @@ class CSVParser(object):
 		Puro.objects.all().delete()
 
 		peso = 0
-
+		p = []
 		print "Peso: %d " % (peso)
 		for row in self._reader:
-			if not row: continue # las lineas en blanco o invalidas se ignoran
-			#la fecha de extraction. Verificar patron (1)
+			if not row: continue # ignore invalid o blank lines
+			#extraction date. Verificar patron (1)
 			if len(row) == 2:
 				if 1 == self.get_value(row[0]):
 					self.extraction_timestamp = datetime.strptime(row[1], '%Y%m%d').replace(tzinfo=utc)
@@ -130,26 +132,22 @@ class CSVParser(object):
 			#los datos del trabajador y hora de checada. Verificar patron (3)
 			elif len(row) == 9:
 				if 3 == self.get_value(row[1]):
-
 					
 					hora_de_checada = self.get_value(row[0])
 					clave_de_trabajador = self.get_value(row[2])
-					# insertar en tabla
-					#clave_trabajador 
-					#fecha_control
-					#hora_control
-					#actualizacion
-					#id
-					#try:
-					print "%d" % (peso),
+					# try:
 					peso = peso + 1
-					p = Puro(clave_trabajador=clave_de_trabajador,
+					# prepare 
+					r = Puro(clave_trabajador=clave_de_trabajador,
 						fecha_control=fecha_de_checada,
 						hora_control=hora_de_checada,
-						actualizacion=self.extraction_timestamp
+						actualizacion=self.extraction_timestamp, 
+						id=peso
 						)
-					#	p.save()
-					#except IntegrityError:
-					#	pass
-		p.save()
+					p.append(r)
+					
+		try:
+			Puro.objects.bulk_create(p)
+		except Exception, e:
+			raise ValueError(e)
 		return True

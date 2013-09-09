@@ -1,6 +1,7 @@
 #std libs
 import csv
 from datetime import datetime, date
+import time
 #django core libs
 from django.utils.timezone import utc
 from django.db.utils import IntegrityError
@@ -8,6 +9,19 @@ from django.db.utils import IntegrityError
 #app lib
 from .models import Paso
 from .excepcion import UnknownSource
+
+def timeit(method):
+	"""
+	Thanks John! http://stackoverflow.com/a/2662229/294579
+	"""
+	def timed(*args, **kw):
+		ts = time.time()
+		result = method(*args, **kw)
+		te = time.time()
+		print '%r (%r, %r) %2.2f sec\n' % \
+			(method.__name__, args, kw, te-ts)
+		return result
+	return timed
 
 """
 file = request.FILES['fileUpload']
@@ -87,6 +101,7 @@ class CSVParser(object):
 		except csv.Error as e:
 			print "File: %s, linea: %d : %s" %(self._source, self._reader.line_num, e)
 
+	
 	def get_value(self, item):
 		"""
 		Retorna un entero si el valor es visto como entero. En otro caso,
@@ -100,6 +115,7 @@ class CSVParser(object):
 			return int(item)
 		return item
 
+	@timeit
 	def get_items(self):
 		"""
 		Recorre todo el archivo retornando los valores correspondientes.
@@ -110,7 +126,7 @@ class CSVParser(object):
 		#truncate models
 		Paso.objects.all().delete()
 		p = []
-		paso = 0
+		paso = 1
 		for row in self._reader:
 			if not row: continue # las lineas en blanco o invalidas se ignoran
 			#la fecha de extraction. Verificar patron (1)
@@ -130,23 +146,24 @@ class CSVParser(object):
 					hora_de_checada = hora_de_checada.time()
 					hora_y_fecha_de_checada = datetime.combine(fecha_de_checada, hora_de_checada).replace(tzinfo=utc)
 					clave_de_trabajador = self.get_value(row[2])
-					# insertar en tabla
-					#clave_trabajador 
-					#fecha_control
-					#hora_control
-					#actualizacion
-					#id
 					#try:
-					q = {'clave_trabajador':clave_de_trabajador,
-						'fecha_control':hora_y_fecha_de_checada,
-						'hora_control':hora_de_checada,
-						'actualizacion':self.extraction_timestamp
-						}
-					p.add(q)
-					paso = paso +1
-					#p.save()
-					print "%4d" % (paso),
-					#except IntegrityError:
-					#	pass
-		s = Paso(p)
+					q = Paso(clave_trabajador=clave_de_trabajador,
+						fecha_control=hora_y_fecha_de_checada,
+						hora_control=hora_de_checada,
+						actualizacion=self.extraction_timestamp,
+						id = paso
+						)
+					p.append(q)
+					paso = paso + 1
+
+		# Try save in bulk mode.			
+		try:
+			#print "Saved. %4d records..." % (len(p),)
+			Paso.objects.bulk_create(p)
+			#print "OK."
+		except Exception,e:
+			return False
+		# Expected all ok. 
 		return True
+		
+		

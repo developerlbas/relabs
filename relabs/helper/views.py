@@ -3,14 +3,14 @@
 from django.views.generic.edit import FormView
 #trhid-p
 #apps
-from .helper import CSVParser
+from .csvtoint import CSVParser
 from .forms import CHKFileForm
 
 
 class CHKFileView(FormView):
 	template_name = 'chk/cargar.html'
 	form_class = CHKFileForm
-	success_url = '/ctl/procesar/'
+	success_url = 'ctl/procesar/'
 	
 	def form_valid(self, form):
 		return super(CHKFileView,self).form_valid(form)
@@ -24,7 +24,7 @@ class CHKFileView(FormView):
 		POST variables and then checked for validity.
 		"""
 		archivo = request.FILES['archivo']
-		print "[+] Try load: ", archivo, "=+=" * 25
+		print "[+] Try load: ", archivo, "<==>" * 20
 		form_class = self.get_form_class()
 		form = self.get_form(form_class)
 		if form.is_valid:
